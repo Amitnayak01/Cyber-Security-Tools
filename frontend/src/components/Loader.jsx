@@ -1,0 +1,1 @@
+export default function Loader({text='Loading...'}){return(<div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"><div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-800 dark:border-gray-700 dark:border-t-white"/><span>{text}</span></div>);}

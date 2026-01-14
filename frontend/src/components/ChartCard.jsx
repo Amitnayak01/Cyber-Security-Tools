@@ -1,0 +1,1 @@
+export default function ChartCard({title,children}){return(<div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-950"><p className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{title}</p>{children}</div>);}
