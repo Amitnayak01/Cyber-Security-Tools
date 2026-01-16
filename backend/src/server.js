@@ -16,12 +16,25 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json({ limit: "1mb" }));
 
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  "http://localhost:5173"
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN,
+    origin: function (origin, callback) {
+      // allow requests with no origin like Postman
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+
+      return callback(new Error("CORS blocked: " + origin));
+    },
     credentials: true
   })
 );
+
 
 app.get("/health", (req, res) => {
   res.json({ success: true, message: "Backend is running ✅" });
