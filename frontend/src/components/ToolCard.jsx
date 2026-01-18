@@ -1,1 +1,16 @@
-export default function ToolCard({title,children}){return(<div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-950"><h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>{children}</div>);}
+export default function ToolCard({ title, children, subtitle }) {
+  return (
+    <div className="ui-card p-6">
+      <div className="mb-5">
+        <h2 className="text-lg font-black tracking-tight text-gray-900 dark:text-white">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{subtitle}</p>
+        )}
+      </div>
+
+      {children}
+    </div>
+  );
+}

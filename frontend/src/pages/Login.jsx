@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ToolCard from "../components/ToolCard";
 import Topbar from "../components/Topbar";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login({ showToast }) {
   const { login } = useAuth();
   const nav = useNavigate();
+
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("admin123");
   const [loading, setLoading] = useState(false);
@@ -14,6 +14,7 @@ export default function Login({ showToast }) {
   async function submit(e) {
     e.preventDefault();
     setLoading(true);
+
     try {
       await login(username, password);
       showToast?.("Login successful ✅", "success");
@@ -28,14 +29,55 @@ export default function Login({ showToast }) {
   return (
     <>
       <Topbar title="Login" />
-      <div className="p-6">
-        <ToolCard title="Login">
-          <form onSubmit={submit} className="space-y-3">
-            <input value={username} onChange={(e)=>setUsername(e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-800 dark:bg-gray-950 dark:text-white" />
-            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-800 dark:bg-gray-950 dark:text-white" />
-            <button disabled={loading} className="rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 dark:bg-white dark:text-black">{loading?"Logging in...":"Login"}</button>
+      <div className="grid min-h-[calc(100vh-72px)] place-items-center p-6">
+        <div className="w-full max-w-xl ui-card p-8">
+          <div className="mb-6">
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              Access Platform
+            </p>
+            <h2 className="mt-1 text-2xl font-black tracking-tight text-gray-900 dark:text-white">
+              Sign in to Cyber Tools
+            </h2>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Use your admin / analyst / user credentials to access tools.
+            </p>
+          </div>
+
+          <form onSubmit={submit} className="space-y-4">
+            <div>
+              <label className="mb-1 block text-xs font-bold text-gray-500 dark:text-gray-400">
+                Username
+              </label>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="ui-input"
+                placeholder="Enter username"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-xs font-bold text-gray-500 dark:text-gray-400">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="ui-input"
+                placeholder="Enter password"
+              />
+            </div>
+
+            <button disabled={loading} className="ui-btn-primary w-full">
+              {loading ? "Signing in..." : "Login"}
+            </button>
           </form>
-        </ToolCard>
+
+          <div className="mt-6 rounded-2xl border border-indigo-200 bg-indigo-50 p-4 text-xs text-indigo-700 dark:border-indigo-900/40 dark:bg-indigo-500/10 dark:text-indigo-200">
+            Tip: Start with <b>admin/admin123</b> then create Analyst accounts in Admin Panel.
+          </div>
+        </div>
       </div>
     </>
   );

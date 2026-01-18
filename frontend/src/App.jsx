@@ -16,29 +16,91 @@ import AdminUsers from "./pages/AdminUsers";
 import Settings from "./pages/Settings";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
+import Forbidden from "./pages/Forbidden";
 
 export default function App() {
   return (
     <BrowserRouter>
       <AppLayout>
-        {(showToast) => (
+        {(showToast, layout) => (
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login showToast={showToast} />} />
+            <Route path="/" element={<Dashboard layout={layout} />} />
+            <Route path="/login" element={<Login showToast={showToast} layout={layout} />} />
 
-            <Route path="/password" element={<PasswordTool showToast={showToast} />} />
-            <Route path="/hash" element={<HashTool showToast={showToast} />} />
-            <Route path="/crypto" element={<CryptoTool showToast={showToast} />} />
+            <Route path="/password" element={<PasswordTool showToast={showToast} layout={layout} />} />
+            <Route path="/hash" element={<HashTool showToast={showToast} layout={layout} />} />
+            <Route path="/crypto" element={<CryptoTool showToast={showToast} layout={layout} />} />
 
-            <Route path="/url-scanner" element={<ProtectedRoute roles={["analyst","admin"]}><UrlScannerTool showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/port-scanner" element={<ProtectedRoute roles={["analyst","admin"]}><PortScannerTool showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/whois" element={<ProtectedRoute roles={["analyst","admin"]}><WhoisTool showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/virustotal" element={<ProtectedRoute roles={["analyst","admin"]}><VirusTotalTool showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/history" element={<ProtectedRoute roles={["user","analyst","admin"]}><History showToast={showToast} /></ProtectedRoute>} />
+            <Route
+              path="/url-scanner"
+              element={
+                <ProtectedRoute roles={["analyst", "admin"]}>
+                  <UrlScannerTool showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/port-scanner"
+              element={
+                <ProtectedRoute roles={["analyst", "admin"]}>
+                  <PortScannerTool showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/whois"
+              element={
+                <ProtectedRoute roles={["analyst", "admin"]}>
+                  <WhoisTool showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/virustotal"
+              element={
+                <ProtectedRoute roles={["analyst", "admin"]}>
+                  <VirusTotalTool showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <ProtectedRoute roles={["user", "analyst", "admin"]}>
+                  <History showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/admin-dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/admin-users" element={<ProtectedRoute roles={["admin"]}><AdminUsers showToast={showToast} /></ProtectedRoute>} />
-            <Route path="/settings" element={<ProtectedRoute roles={["admin"]}><Settings showToast={showToast} /></ProtectedRoute>} />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AdminDashboard showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-users"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AdminUsers showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <Settings showToast={showToast} layout={layout} />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Error Routes */}
+            <Route path="/403" element={<Forbidden layout={layout} />} />
+            <Route path="*" element={<NotFound layout={layout} />} />
           </Routes>
         )}
       </AppLayout>

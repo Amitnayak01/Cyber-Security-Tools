@@ -18,14 +18,15 @@ app.use(express.json({ limit: "1mb" }));
 
 const allowedOrigins = [
   process.env.CLIENT_ORIGIN,
-  "http://localhost:5173"
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175"
 ].filter(Boolean);
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin like Postman
-      if (!origin) return callback(null, true);
+      if (!origin) return callback(null, true); // allow Postman
 
       if (allowedOrigins.includes(origin)) return callback(null, true);
 
